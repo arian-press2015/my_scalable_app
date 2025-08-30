@@ -1,6 +1,9 @@
 const express = require('express');
 const { Worker } = require('node:worker_threads');
 const app = express();
+const WorkerPool = require('./worker-pool');
+
+const pool = new WorkerPool('./cpu-worker.js', 4);
 
 app.get('/io/slow', async (req, res) => {
     const data = await getDBUserSlow();
@@ -21,14 +24,13 @@ app.get('/cpu/slow', async (req, res) => {
 
 app.get('/cpu/fast', async (req, res) => {
     const data = await getDBUserFast();
-    
-    await new Promise((res, rej) => {
-        const worker = new Worker('cpu-worker.js');
-        worker.once("message", res);
-        worker.once("error", rej);
-        worker.postMessage({ iterations: 1e7 });
+    const result = await pool.exec({
+        iterations: 1e7
     });
-    res.json(data);
+    res.json({
+        ...data,
+        result
+    });
 });
 
 async function getDBUserSlow() {
