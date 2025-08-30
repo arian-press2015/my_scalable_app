@@ -4,9 +4,10 @@
   "main": "index.js",
   "scripts": {
     "start:single": "node app.js",
-    "test:io:slow": "autocannon -c 1000 -d 20 http://localhost:3000/io/slow",
-    "test:cpu:fast": "autocannon -c 1000 -d 20 http://localhost:3000/cpu/fast",
-    "test:cpu:slow": "autocannon -c 1000 -d 20 http://localhost:3000/cpu/slow",
+    "test:io:slow": "autocannon -c 100 -d 20 http://localhost:3000/io/slow",
+    "test:io:fast": "autocannon -c 100 -d 20 http://localhost:3000/io/fast",
+    "test:cpu:fast": "autocannon -c 100 -d 20 http://localhost:3000/cpu/fast",
+    "test:cpu:slow": "autocannon -c 100 -d 20 http://localhost:3000/cpu/slow",
     "start:scaled": "pm2 start ecosystem.config.js",
     "stop:scaled": "pm2 stop app"
   },
