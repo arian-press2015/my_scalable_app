@@ -3,7 +3,7 @@ const crypto = require('node:crypto');
 const app = express();
 
 app.get('/query/fast', (req, res) => {
-    crypto.pbkdf2("password", "salt", 10000, 64, "sha512", () => {
+    crypto.pbkdf2("password", "salt", 1000, 64, "sha512", () => {
         res.json({
             id: 1,
             username: "johndoe",
@@ -13,7 +13,7 @@ app.get('/query/fast', (req, res) => {
 });
 
 app.get('/query/slow', (req, res) => {
-    crypto.pbkdf2("password", "salt", 100000, 64, "sha512", () => {
+    crypto.pbkdf2("password", "salt", 10000, 64, "sha512", () => {
         res.json({
             id: 1,
             username: "johndoe",
